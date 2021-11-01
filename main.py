@@ -1,8 +1,8 @@
-from result_tree import ResultTree
+from breeding_result import BreedingResult
 
-result = ResultTree("1000", "1000")
-children = result.root.children
-for child in children:
-    print("-----")
-    print(child.data)
-    print(child.prob)
+f1 = input("First flower genes: ")
+f2 = input("Second flower genes: ")
+
+result = BreedingResult(f1, f2)
+for i in result.children:
+    print(i)
