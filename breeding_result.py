@@ -1,3 +1,4 @@
+from flower import Flower
 
 class BreedingResult:
 
@@ -13,8 +14,11 @@ class BreedingResult:
 
     # each instance of BreedingResult calculates potential children of two specific flowers
     def __init__(self, f1, f2):
+        self.f1 = f1
+        self.f2 = f2
+
         # generates list of keys for accessing combinations
-        self.keys = [''.join(sorted(i)) for i in zip(f1, f2)]
+        self.keys = [''.join(sorted(i)) for i in zip(f1.genes, f2.genes)]
 
         # create list of children and spawn probabilities
         self.children = []
@@ -25,7 +29,8 @@ class BreedingResult:
 
         if index == len(self.keys):
             for i in BreedingResult.combinations[self.keys[index-1]]:
-                self.children.append((string, prob))
+                # self.children.append((string, prob))
+                self.children.append((Flower(string, self.f1.species), prob))
                 return True
         else:
             for i in BreedingResult.combinations[self.keys[index]]:
