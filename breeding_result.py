@@ -29,8 +29,7 @@ class BreedingResult:
 
         if index == len(self.keys):
             for i in BreedingResult.combinations[self.keys[index-1]]:
-                # self.children.append((string, prob))
-                self.children.append((Flower(string, self.f1.species), prob))
+                self.children.append(Flower(string, self.f1.species, self, prob))
                 return True
         else:
             for i in BreedingResult.combinations[self.keys[index]]:
