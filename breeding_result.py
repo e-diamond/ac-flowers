@@ -41,7 +41,7 @@ class BreedingResult:
 
     # generates the offspring of every possible flower combination
     @classmethod
-    def generateAll(cls, species=None):
+    def generateAll(cls, species):
         # account for roses having an extra gene
         if species == "rose":
             genes = [pad(ternary(i, 10), 4) for i in range(81)]

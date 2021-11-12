@@ -1,6 +1,6 @@
 
 # change a given number to base 10 (returns int)
-def decimal(value, base):
+def denary(value, base):
     result = 0
     for i, digit in enumerate(reversed(value)):
         result = result + int(digit)*(base**i)
@@ -9,7 +9,7 @@ def decimal(value, base):
 # change a given number to base 3 (returns str)
 def ternary(value, base):
     if base != 10:
-        value = decimal(str(value), base)
+        value = denary(str(value), base)
 
     result = ""
     while value:
@@ -18,7 +18,7 @@ def ternary(value, base):
 
     return result
 
-# pads a gene string with leading zeros 
+# pads a gene string with leading zeros
 def pad(value, length):
     while len(value) < length:
         value = "0" + value

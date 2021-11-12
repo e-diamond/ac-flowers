@@ -17,7 +17,7 @@ class Flower:
         self.genes = genes
         self.species = species
         self.color = Flower.getColor(genes, species)
-        self.parents = []
+        self.parents = None
 
     # flowers only need same genes and species to be equivalent
     def __eq__(self, other):
@@ -31,17 +31,23 @@ class Flower:
         return self.genes in Flower.seed_data[self.species]
 
     # find every possible pair of parents which can produce this flower
-    # TODO: exclude parents that are equal to self: if we already have a flower we don't need to make it again!!!
-    def getParents(self):
+    def getParents(self, produced=[]):
+        parents = []
+
+        # look for self as a child of every possible breeding pair
         for result in BreedingResult.all:
-            for child in result.children:
-                if child['genes'] == self.genes:
-                    self.parents.append({'parents':(Flower(result.f1, self.species), Flower(result.f2, self.species)), 'prob':child['prob']})
-                    break
+            # exclude pairs with a parent that has the same genes as a descendant
+            # prevents infinite loops that form over several generations
+            if result.f1 not in produced and result.f2 not in produced:
+                for child in result.children:
+                    if child['genes'] == self.genes:
+                        parents.append({'flowers':(Flower(result.f1, self.species), Flower(result.f2, self.species)), 'prob':child['prob']})
+                        break
+        self.parents = parents
 
     @staticmethod
     def getColor(genes, species):
-        return Flower.color_data[decimal(genes, 3)][species]
+        return Flower.color_data[denary(genes, 3)][species]
 
     @staticmethod
     def getGenes(color, species):
